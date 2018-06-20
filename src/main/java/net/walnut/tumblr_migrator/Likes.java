@@ -41,10 +41,18 @@ public class Likes {
 				if (e.getResponseCode() == 429)
 					out.println(
 							"This API key has exceeded the rate limit - it's either gone over 1000 requests/hr, 5000/day, or both. Wait an hour or use a different key.");
-				else
-					out.println(
-							"Not sure what went wrong here. Stack trace is as follows (send this to Walnut#2445 on Discord): "
-									+ e.getStackTrace());
+				else {
+					String ct = Long.toString(System.currentTimeMillis() / 1000L) + ".txt";
+					try {
+						PrintWriter dump = new PrintWriter(ct, "UTF-8");
+						dump.println(
+								"Follow Migration encountered error " + e.getResponseCode() + ": " + e.getMessage());
+						dump.close();
+					} catch (IOException e1) {
+					}
+					out.println("I've encountered an error. I've saved relevant information to " + ct
+							+ ", please open it and copy the contents into a new issue at https://github.com/WalnutBunny/TumblrMigrator/issues .");
+				}
 				return 1;
 			}
 		}
@@ -60,10 +68,11 @@ public class Likes {
 									+ i);
 					return 1;
 				} else {
-					String ct = Long.toString(System.currentTimeMillis() / 1000L);
+					String ct = Long.toString(System.currentTimeMillis() / 1000L) + ".txt";
 					out.println(
-							"Something happened, but I'm not sure what it was - I've saved a file in your current directory titled "
-									+ ct + ", please send it to Walnut#2445 on Discord.");
+							"Something happened, but I'm not sure what it was - I've saved relevant information to "
+									+ ct
+									+ ", please open it and copy the contents into a new issue on https://github.com/WalnutBunny/TumblrMigrator/issues .");
 					try {
 						PrintWriter dump = new PrintWriter(Long.toString(System.currentTimeMillis() / 1000L), "UTF-8");
 						dump.println(
