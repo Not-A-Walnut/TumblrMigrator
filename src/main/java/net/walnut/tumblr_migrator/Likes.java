@@ -57,15 +57,30 @@ public class Likes {
 			}
 		}
 		out.println("Finished gathering likes");
-		for (int i = likes.size(); i >= 0; i--) {
-			Post p = likes.get(i);
+		int x;
+		if(startat != -1)
+		{
+			try
+			{
+				likes.get(startat);
+				x = startat;
+			} catch (IndexOutOfBoundsException e)
+			{
+				out.println("Invalid i(Likes) - ignoring.");
+				x = likes.size() - 1;
+			}
+			
+		}
+		else x = likes.size() - 1;
+		for (; x >= 0; x--) {
+			Post p = likes.get(x);
 			try {
 				newTumblr.like(p.getId(), p.getReblogKey());
 			} catch (JumblrException e) {
 				if (e.getResponseCode() == 429) {
 					out.println(
 							"This API key has exceeded the rate limit - it's either gone over 1000 requests/hr, 5000/day, or both. Wait an hour or use a different key, and enter this number when it asks you for i(Likes): "
-									+ i);
+									+ x);
 					return 1;
 				} else {
 					String ct = Long.toString(System.currentTimeMillis() / 1000L) + ".txt";

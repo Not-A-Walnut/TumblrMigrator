@@ -65,11 +65,11 @@ public class Follows {
 		if (startat != -1) {
 			try {
 				blogs.get(startat);
+				x = startat;
 			} catch (IndexOutOfBoundsException e) {
 				out.println("Invalid i(Blogs) - ignoring.");
 				x = blogs.size() - 1;
 			}
-			x = startat;
 		} else
 			x = blogs.size() - 1;
 		for (; x >= 0 && o <= 200; x--, o++) {
