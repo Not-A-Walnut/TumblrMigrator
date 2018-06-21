@@ -50,7 +50,7 @@ public class Main {
 		accessToken = service.getAccessToken(requestToken, verifier);
 		String token2 = accessToken.getToken();
 		String token2s = accessToken.getTokenSecret();
-		out.println("All done - I've got access to both accounts. Would you like to transfer your likes now? (y/n) ");
+		out.print("All done - I've got access to both accounts. Would you like to transfer your likes now? (y/n) ");
 		char a = in.nextLine().toLowerCase().charAt(0);
 		while(a == 'y')
 		{
@@ -65,16 +65,16 @@ public class Main {
 			}
 			a = 'n';
 		}
-		out.println("Do you want to transfer the blogs you're following now? (y/n) ");
+		out.print("Do you want to transfer the blogs you're following now? (y/n) ");
 		a = in.nextLine().toLowerCase().charAt(0);
 		while(a == 'y')
 		{
-			out.println("Please enter i(Blogs) (enter -1 if you don't know): ");
+			out.print("Please enter i(Blogs) (enter -1 if you don't know): ");
 			int i = in.nextInt();
 			in.nextLine();
 			if(new Follows(ckey, csecret, token1, token1s, token2, token2s).doTheThing(i) != 0)
 			{
-				out.println("Looks like something went wrong. Do you want to try again? (y/n) ");
+				out.print("Looks like something went wrong. Do you want to try again? (y/n) ");
 				a = in.nextLine().toLowerCase().charAt(0);
 				continue;
 			}

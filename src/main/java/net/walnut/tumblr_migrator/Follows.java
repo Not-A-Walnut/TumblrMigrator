@@ -61,23 +61,32 @@ public class Follows {
 			}
 		}
 		out.println("Finished gathering followed blogs");
-		int o = 0;
-		for (int i = blogs.size(); i >= 0 && o <= 200; i--, o++) {
-			Blog b = blogs.get(i);
+		int o = 0, x;
+		if (startat != -1) {
+			try {
+				blogs.get(startat);
+			} catch (IndexOutOfBoundsException e) {
+				out.println("Invalid i(Blogs) - ignoring.");
+				x = blogs.size() - 1;
+			}
+			x = startat;
+		} else
+			x = blogs.size() - 1;
+		for (; x >= 0 && o <= 200; x--, o++) {
+			Blog b = blogs.get(x);
 			try {
 				newTumblr.follow(b.getName());
 			} catch (JumblrException e) {
 				if (e.getResponseCode() == 429) {
 					out.println(
 							"This API key has exceeded the rate limit - it's either gone over 1000 requests/hr, 5000/day, or both. Wait an hour or use a different key. Input this when asked for i(Blogs): "
-									+ i);
+									+ x);
 					return 1;
 				} else {
 					String ct = Long.toString(System.currentTimeMillis() / 1000L) + ".txt";
-					out.println(
-							"Something happened, but I'm not sure what it was - I've saved relevant information to "
-									+ ct
-									+ ", please open it and copy the contents into a new issue on https://github.com/WalnutBunny/TumblrMigrator/issues .");
+					out.println("Something happened, but I'm not sure what it was - I've saved relevant information to "
+							+ ct
+							+ ", please open it and copy the contents into a new issue on https://github.com/WalnutBunny/TumblrMigrator/issues .");
 					try {
 						PrintWriter dump = new PrintWriter(ct, "UTF-8");
 						dump.println(
