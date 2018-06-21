@@ -58,20 +58,17 @@ public class Likes {
 		}
 		out.println("Finished gathering likes");
 		int x;
-		if(startat != -1)
-		{
-			try
-			{
+		if (startat != -1) {
+			try {
 				likes.get(startat);
 				x = startat;
-			} catch (IndexOutOfBoundsException e)
-			{
+			} catch (IndexOutOfBoundsException e) {
 				out.println("Invalid i(Likes) - ignoring.");
 				x = likes.size() - 1;
 			}
-			
-		}
-		else x = likes.size() - 1;
+
+		} else
+			x = likes.size() - 1;
 		for (; x >= 0; x--) {
 			Post p = likes.get(x);
 			try {
@@ -84,10 +81,9 @@ public class Likes {
 					return 1;
 				} else {
 					String ct = Long.toString(System.currentTimeMillis() / 1000L) + ".txt";
-					out.println(
-							"Something happened, but I'm not sure what it was - I've saved relevant information to "
-									+ ct
-									+ ", please open it and copy the contents into a new issue on https://github.com/WalnutBunny/TumblrMigrator/issues .");
+					out.println("Something happened, but I'm not sure what it was - I've saved relevant information to "
+							+ ct
+							+ ", please open it and copy the contents into a new issue on https://github.com/WalnutBunny/TumblrMigrator/issues .");
 					try {
 						PrintWriter dump = new PrintWriter(Long.toString(System.currentTimeMillis() / 1000L), "UTF-8");
 						dump.println(

@@ -72,7 +72,7 @@ public class Follows {
 			}
 		} else
 			x = blogs.size() - 1;
-		for (; x >= 0 && o <= 200; x--, o++) {
+		for (; x >= 0; x--, o++) {
 			Blog b = blogs.get(x);
 			try {
 				newTumblr.follow(b.getName());
@@ -82,6 +82,9 @@ public class Follows {
 							"This API key has exceeded the rate limit - it's either gone over 1000 requests/hr, 5000/day, or both. Wait an hour or use a different key. Input this when asked for i(Blogs): "
 									+ x);
 					return 1;
+				} else if (e.getResponseCode() == 404) {
+					out.println("You were following a blog that doesn't exist anymore - ignoring it.");
+					continue;
 				} else {
 					String ct = Long.toString(System.currentTimeMillis() / 1000L) + ".txt";
 					out.println("Something happened, but I'm not sure what it was - I've saved relevant information to "
@@ -102,8 +105,10 @@ public class Follows {
 					continue;
 				}
 			}
-			if (o == 200) {
-				out.println("You've reached the daily follow cap - Tumblr only allows you to follow 200 blogs a day.");
+			if (o == 199) {
+				out.println(
+						"You've reached the daily follow cap - Tumblr only allows you to follow 200 blogs a day. Enter this when prompted for i(Blogs) tomorrow: "
+								+ x);
 				return 1;
 			}
 		}
