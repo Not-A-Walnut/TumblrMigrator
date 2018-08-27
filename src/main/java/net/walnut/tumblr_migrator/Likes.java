@@ -46,7 +46,7 @@ public class Likes {
 					try {
 						PrintWriter dump = new PrintWriter(ct, "UTF-8");
 						dump.println(
-								"Follow Migration encountered error " + e.getResponseCode() + ": " + e.getMessage());
+								"Like Migration encountered error " + e.getResponseCode() + ": " + e.getMessage());
 						dump.close();
 					} catch (IOException e1) {
 					}
