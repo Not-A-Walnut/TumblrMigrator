@@ -21,9 +21,9 @@ public class Main {
 	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
 		Scanner in = new Scanner(System.in);
 		out.print("Please copy and paste the \"OAuth Consumer Key\" here: ");
-		String ckey = in.nextLine();
+		String ckey = in.nextLine().trim();
 		out.print("Please copy and paste the \"Secret Key\" here: ");
-		String csecret = in.nextLine();
+		String csecret = in.nextLine().trim();
 		OAuth10aService service = new ServiceBuilder(ckey).apiSecret(csecret).callback("http://localhost/")
 				.build(TumblrApi.instance());
 		out.print("Do you have a token string? (y/n) ");
@@ -38,7 +38,7 @@ public class Main {
 			out.println("Your token string is: " + t);
 		} else {
 			out.print("Please paste it exactly as you received it: ");
-			tokens = in.nextLine().split(" ");
+			tokens = in.nextLine().trim().split(" ");
 		}
 		token1 = tokens[0];
 		token1s = tokens[1];
